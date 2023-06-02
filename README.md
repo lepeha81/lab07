@@ -15,11 +15,38 @@ print.hpp содержание:
 
 ![image](https://github.com/lepeha81/lab07/blob/main/2.PNG)
 
+#include <fstream> - подключение библиотеки для работы с файловыми потоками ввода/вывода.
+
+#include <iostream> - подключение библиотеки для работы со стандартными потоками ввода/вывода.
+
+#include <string> - подключение библиотеки для работы со строками.
+
+void print(const std::string& text, std::ofstream& out); - объявление функции для вывода строки в файловый поток.
+
+void print(const std::string& text, std::ostream& out = std::cout); - объявление функции для вывода строки в стандартный поток ввода/вывода с параметром по умолчанию - стандартный поток вывода.
+  
 Делаем print.cpp
 
 print.cpp содержание:
 
 ![image](https://github.com/lepeha81/lab07/blob/main/3.PNG)
+  
+ #include <print.hpp> - подключение заголовочного файла print.hpp.
+
+void print(const std::string& text, std::ostream& out) - определение функции для вывода строки в стандартный поток ввода/вывода.
+
+{
+out << text; - вывод строки в заданный поток.
+
+}
+
+void print(const std::string& text, std::ofstream& out) - определение функции для вывода строки в файловый поток.
+
+{
+out << text; - вывод строки в заданный поток.
+
+}
+
 
 Делаем main.cpp
 
@@ -47,7 +74,42 @@ int main(int argc, char* argv[])
   }
 }
 ```
+#include <print.hpp> - подключение заголовочного файла print.hpp.
 
+#include <cstdlib> - подключение библиотеки для работы с переменными окружения.
+
+int main(int argc, char* argv[]) - определение функции main.
+
+{
+
+const char* log_path = std::getenv("LOG_PATH"); - получение значения переменной окружения LOG_PATH.
+
+if (log_path == nullptr) - проверка значения переменной окружения.
+
+{
+
+std::cerr << "undefined environment variable: LOG_PATH" << std::endl; - вывод сообщения об ошибке в поток стандартного вывода ошибок.
+
+return 1; - возврат значения 1 (ошибка).
+
+}
+
+std::string text; - объявление переменной типа string.
+
+while (std::cin >> text) - цикл чтения строк из стандартного ввода.
+
+{
+
+std::ofstream out{log_path, std::ios_base::app}; - открытие файла для записи в режиме дополнения.
+
+print(text, out); - вызов функции вывода строки в файловый поток.
+
+out << std::endl; - добавление символа переноса строки в конец файла.
+
+}
+
+}
+  
 ![image](https://github.com/lepeha81/lab07/blob/main/5.PNG)
 
 
