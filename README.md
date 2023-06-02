@@ -166,7 +166,25 @@ ENTRYPOINT ./demo - установка точки входа для запуск
 
 ![image](https://github.com/lepeha81/lab07/blob/main/12.PNG)
 
-![image](https://github.com/lepeha81/lab07/blob/main/13.PNG)
+  - name: docker - название конфигурации.
+
+on: push: - устанавливает условия для запуска на github - при пуше в репозиторий.
+
+jobs: - определяет блок с отдельными задачами.
+
+build: - имя работы.
+
+runs-on: ubuntu-latest - выбор контейнера для выполнения задачи.
+
+steps: - массив шагов, которые должны быть выполнены внутри работы.
+
+- uses: actions/checkout@v3 - клонирование репозитория.
+
+- name: build docker - название шага.
+
+run: docker build -t logger . - создание образа докера с именем logger.
+
+  ![image](https://github.com/lepeha81/lab07/blob/main/13.PNG)
 
 
 Теперь мы будем тестировать наш проект в локальных репозиториях
