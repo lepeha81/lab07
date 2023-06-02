@@ -72,6 +72,29 @@ Dockerfile содержание:
 
 ![image](https://github.com/lepeha81/lab07/blob/main/9.PNG)
 
+FROM ubuntu:20.04 - начало создания Docker-образа на основе образа Ubuntu версии 20.04.
+
+RUN apt update - обновление реестра пакетов Ubuntu.
+
+RUN apt install -yy gcc g++ cmake - установка компиляторов gcc, g++ и сборщика CMake.
+
+COPY . print/ - копирование всех файлов в текущей директории в папку print внутри контейнера.
+
+WORKDIR print - установка рабочей директории контейнера на директорию print.
+
+RUN cmake -H. -B_build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_install - запуск CMake для генерации файлов для сборки.
+
+RUN cmake --build _build - запуск команды сборки проекта.
+
+RUN cmake --build _build --target install - запуск команды установки собранного проекта.
+
+ENV LOG_PATH /home/lab-07/logs/log.txt - определение переменной среды LOG_PATH со значением /home/lab-07/logs/log.txt.
+
+VOLUME /home/lab-07/logs - создание тома для директории /home/lab-07/logs.
+
+WORKDIR _install/bin - установка рабочей директории контейнера на директорию _install/bin.
+
+ENTRYPOINT ./demo - установка точки входа для запуска демонстрационного приложения.
 ![image](https://github.com/lepeha81/lab07/blob/main/10.PNG)
 
 
